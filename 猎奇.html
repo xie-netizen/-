@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>飞段格调分析实验</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: "微软雅黑", sans-serif;
+            overflow: hidden;
+        }
+        /* 顶部彩虹大字 */
+        .rainbow-title {
+            font-size: 40px;
+            font-weight: bold;
+            margin-bottom: 60px;
+            background: linear-gradient(
+                to right,
+                #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00
+            );
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbowFlow 6s linear infinite;
+        }
+        @keyframes rainbowFlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        /* 竖排：老袜酱 */
+        .vertical-box {
+            display: inline-block;
+            border: 2px solid #fff;
+            padding: 6px 12px;
+            margin-bottom: 20px;
+        }
+        .vertical-text {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            font-size: 24px;
+            color: #fff;
+            letter-spacing: 8px;
+        }
+        /* 横排：格 调 */
+        .horizontal-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+        .word-box {
+            border: 2px solid #fff;
+            padding: 6px 14px;
+            font-size: 24px;
+            color: #fff;
+        }
+        /* 左侧花朵按钮 */
+        .flower-btn {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+        .flower-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 20, 147, 0.6);
+        }
+        /* 花朵下落动画 */
+        .flower {
+            position: fixed;
+            top: -50px;
+            font-size: 24px;
+            pointer-events: none;
+            animation: fall linear forwards;
+            z-index: 998;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="rainbow-title">飞段格调分析实验</div>
+    <div class="vertical-box">
+        <div class="vertical-text">老袜酱</div>
+    </div>
+    <div class="horizontal-row">
+        <div class="word-box">格</div>
+        <div class="word-box">调</div>
+    </div>
+
+    <!-- 左侧花朵按钮 -->
+    <button class="flower-btn" onclick="dropFlowers()">🌸</button>
+
+    <script>
+        // 花朵下落功能
+        function dropFlowers() {
+            const flowers = ['🌸', '🌺', '🌻', '🌹', '🌼', '🌷'];
+            const count = 20; // 一次下落20朵
+            
+            for (let i = 0; i < count; i++) {
+                const flower = document.createElement('div');
+                flower.className = 'flower';
+                flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+                
+                // 随机位置、速度、大小
+                flower.style.left = Math.random() * 100 + 'vw';
+                flower.style.animationDuration = Math.random() * 3 + 2 + 's';
+                flower.style.fontSize = Math.random() * 20 + 16 + 'px';
+                
+                document.body.appendChild(flower);
+                
+                // 动画结束后删除
+                setTimeout(() => flower.remove(), 5000);
+            }
+        }
+    </script>
+</body>
+</html>
